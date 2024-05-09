@@ -5,6 +5,8 @@ from classes.schemas_dto import Todo
 from classes.schemas_dto  import TodoNoID
 from typing import List
 from routers.router_auth import get_current_user
+from uuid import uuid4
+
 
 from database.firebase import db
 
@@ -34,17 +36,11 @@ async def get_todo(user_data: int= Depends(get_current_user)):
 # 1. Exercice (10min) Create new Todo: POST
 # response_model permet de définir de type de réponse (ici nous retournons le todo avec sont id)
 # status_code est définit sur 201-Created car c'est un POST
-@router.post('/todos', response_model=Todo, status_code=201)
-async def create_todo(givenName:str):
-    # génération de l'identifiant unique
-    generatedId=uuid.uuid4()
-    # création de l'object/dict Todo 
-    newTodo= Todo(id=str(generatedId), name=givenName)
-    # Ajout du nouveau Todo dans la List/Array
-    Todos.append(newTodo)
-    
-    db.child("todo").child(generatedId).set(newTodo.model_dump())
-    # Réponse définit par le Todo avec son ID
+@router.post("/todos", status_code=201, response_model=Todo)
+async def create_todo(todo: Todo, user_data: int= Depends(get_current_user)):
+    generatedId=str(uuid4())
+    newTodo = Todo (id=generatedId, name=todo.name)
+    db.child('todo').child(generatedId).set(data=newTodo.model_dump(), token=user_data['idToken'])
     return newTodo
 
 
