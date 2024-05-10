@@ -1,4 +1,3 @@
-
 from fastapi import APIRouter, Depends, HTTPException
 from classes.schemas_dto import Todos
 from classes.schemas_dto import Todo
@@ -61,20 +60,36 @@ async def todo_update(todo_id: str, todo: TodoNoID, user_data: int= Depends(get_
     queryResult = db.child('todo').child(todo_id).get(user_data['idToken']).val()
     if not queryResult : raise HTTPException(status_code=404, detail="Todo not found") 
     updatedTodo = Todo(id=todo_id, **todo.model_dump())
-    return db.child('todo').child(todo_id).update(data=updatedTodo.model_dump(), token=user_data['idToken'])
+    db.child('todo').child(todo_id).update(data=updatedTodo.model_dump(), token=user_data['idToken'])
+    return "toDo updated succssefully"
 
 
-# 4. Exercice (10min) DELETE Todo
-@router.delete("/{t_id}", status_code=202, response_model=str)
+# # 4. Exercice (10min) DELETE Todo
+# @router.delete("/{t_id}", status_code=202, response_model=str)
+# async def todo_delete(todo_id: str, user_data: int= Depends(get_current_user)) :
+#     queryResult = db.child('todo').child(todo_id).get(user_data['idToken']).val()
+#     if not queryResult : 
+#         raise HTTPException(status_code=404, detail="Todo not found")
+#     db.child('todo').child(todo_id).remove(token=user_data['idToken'])
+#     return "Todo deleted"
+
+# @router.delete('/{todo_id}', status_code=202)
+# async def delete_todo_by_id(todo_id: str, userData: int = Depends(get_current_user)):
+#     task_data = db.child("todo").child(todo_id).get(userData['idToken']).val()
+#     if task_data:
+#         # Supprimez la tâche de la base de données Firebase
+#         db.child("todo").child(todo_id).remove()
+#         return {"message": "Task deleted"}
+#     else:
+#         raise HTTPException(status_code=404, detail="Task not found")
+
+
+#DELETE Request
+@router.delete("/{todo_id}", status_code=202, response_model=str)
 async def todo_delete(todo_id: str, user_data: int= Depends(get_current_user)) :
     queryResult = db.child('todo').child(todo_id).get(user_data['idToken']).val()
     if not queryResult : 
-        raise HTTPException(status_code=404, detail="Todo not found")
+        raise HTTPException(status_code=404, detail="Event not found")
     db.child('todo').child(todo_id).remove(token=user_data['idToken'])
-    return "Todo deleted"
+    return "todo deleted"
 
-# Reste à faire 
-# - Sortir mon todo's router dans un dossier "routers"
-# - Rédiger une documentation et l'ajouter à mon app FastAPI()
-# - Sortir mes pydantic models dans un dossier classes
-# - Ajouter les tags 
