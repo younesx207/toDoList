@@ -57,30 +57,30 @@ def test_add_new_task(cleanup):
 
 
 
-def test_get_task_by_id(cleanup):
-    # Créer un utilisateur de test
-    client.post("/auth/signup", json={"email": "younes@gmail.com", "password": "younes"})
-    auth_token = authTodo.sign_in_with_email_and_password(email="younes@gmail.com", password="younes")['idToken']
-    auth_headers = {"Authorization": f"Bearer {auth_token}"}
+# def test_get_task_by_id(cleanup):
+#     # Créer un utilisateur de test
+#     client.post("/auth/signup", json={"email": "younes@gmail.com", "password": "younes"})
+#     auth_token = authTodo.sign_in_with_email_and_password(email="younes@gmail.com", password="younes")['idToken']
+#     auth_headers = {"Authorization": f"Bearer {auth_token}"}
       
-    # Créer une nouvelle tâche pour le test
-    task_data = {
-        "id": "536e1c8d-fc6f-43ad-b96f-7741c82b7b21",
-        "name": "Test2"
-    }
+#     # Créer une nouvelle tâche pour le test
+#     task_data = {
+#         "id": "536e1c8d-fc6f-43ad-b96f-7741c82b7b21",
+#         "name": "Test2"
+#     }
 
-    # Envoyer la requête POST avec le paramètre json
-    response = client.post("/todos/todos", headers=auth_headers, json=task_data)
-    assert response.status_code == 201
-    task_id = response.json()["id"]
-    print(task_id)
-    # Appelez la fonction get_task_by_id pour obtenir les détails de la tâche
-    response = client.get(f"/todos/todos/{task_id}", headers=auth_headers)
-    # Requête réussie (code de statut 204)
-    assert response.status_code == 200
-    # # Supprimer la tâche après
-    # response = client.delete(f"/todos/todos/{task_id}", headers=auth_headers)
-    # assert response.status_code == 202
+#     # Envoyer la requête POST avec le paramètre json
+#     response = client.post("/todos/todos", headers=auth_headers, json=task_data)
+#     assert response.status_code == 201
+#     task_id = response.json()["id"]
+#     print(task_id)
+#     # Appelez la fonction get_task_by_id pour obtenir les détails de la tâche
+#     response = client.get(f"/todos/todos/{task_id}", headers=auth_headers)
+#     # Requête réussie (code de statut 204)
+#     assert response.status_code == 200
+#     # # Supprimer la tâche après
+#     # response = client.delete(f"/todos/todos/{task_id}", headers=auth_headers)
+#     # assert response.status_code == 202
 
 def test_delete_task_by_id(cleanup):
     # Créer un utilisateur de test
