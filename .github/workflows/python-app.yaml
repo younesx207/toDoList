@@ -1,11 +1,10 @@
 name: Python FastAPI CI
 
 on:
-  # push:
-  #   branches: ["main", "dev"]
-  # pull_request:
-  #   branches: ["main", "dev"]
-  workflow_dispatch
+  push:
+    branches: ["main", "dev"]
+  pull_request:
+    branches: ["main", "dev"]
 
 env:
   FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
