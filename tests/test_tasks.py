@@ -59,13 +59,13 @@ def test_add_new_task(cleanup):
 
 def test_get_task_by_id(cleanup):
     # Créer un utilisateur de test
-    client.post("/auth/signup", json={"email": "test_user@example.com", "password": "testpassword"})
-    auth_token = authTodo.sign_in_with_email_and_password(email="test_user@example.com", password="testpassword")['idToken']
+    client.post("/auth/signup", json={"email": "younes@gmail.com", "password": "younes"})
+    auth_token = authTodo.sign_in_with_email_and_password(email="younes@gmail.com", password="younes")['idToken']
     auth_headers = {"Authorization": f"Bearer {auth_token}"}
       
     # Créer une nouvelle tâche pour le test
     task_data = {
-        "id": "122",
+        "id": "536e1c8d-fc6f-43ad-b96f-7741c82b7b21",
         "name": "Test2"
     }
 
