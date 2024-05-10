@@ -17,7 +17,7 @@ def test_signup(mock_create_user):
     # Exécuter la requête de test
     response = client.post("/auth/signup", json=user_data)
 
-    assert response.status_code == 200
+    assert response.status_code == 201
 
     # Assurez-vous que la fonction create_user a été appelée avec les bonnes données
     mock_create_user.assert_called_once_with(email=user_data["email"], password=user_data["password"])

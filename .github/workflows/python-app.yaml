@@ -2,9 +2,9 @@ name: Python FastAPI CI
 
 on:
   push:
-    branches: ["main", "develop"]
+    branches: ["main", "dev"]
   pull_request:
-    branches: ["main", "develop"]
+    branches: ["main", "dev"]
 
 env:
   FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
@@ -36,8 +36,6 @@ jobs:
     
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v4.0.1
-      
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        slug: benalioune/todoList
         fail_ci_if_error: true
